@@ -29,10 +29,6 @@ model Profile {
   otp String @db.Text
   isVerified Boolean 
   otpExpiresAt DateTime @default(now())
-  servers Server[]
-  members Member[]
-  channels Channel[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
