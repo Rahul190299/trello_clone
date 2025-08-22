@@ -83,7 +83,7 @@ export  async function POST(req: NextRequest) {
   } catch (error) {
     // Handle Zod validation errors
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: error.errors[0].message },{status : 500});
+      return NextResponse.json({ message: error.message },{status : 500});
     }
     // Handle other errors
     return NextResponse.json({ message: 'Internal Server Error' },{status : 500});
