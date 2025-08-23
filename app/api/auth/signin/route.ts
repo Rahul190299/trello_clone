@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
         Auth.setTokenCookie(response, token);
         return response;
       }
+      else{
+        return NextResponse.json({message : "Authentication failure please try again"},{status : 200})
+      }
     } else {
         return NextResponse.json({message : "user not verified",redirectUrl : "/verifyotp"},{status : 200})
     }
