@@ -1,5 +1,5 @@
 
-import { ProfileForm } from '@/components/signup';
+import { ProfileForm } from '@/components/authentication/signup';
 
 export default function Page() {
     //return <SignUp />;
