@@ -100,118 +100,118 @@ export const columnService = {
   },
 };
 
-// export const taskService = {
-//   async getTasksByBoard(boardId: string): Promise<Task[]> {
-//     const tasks = await db.task.findMany({
-//       where: {
-//         column: {
-//           board_id: boardId, // filter by related column's board_id
-//         },
-//       },
-//       orderBy: {
-//         sort_order: "asc",
-//       },
-//       include: {
-//         column: true, // equivalent to Supabase `columns!inner(board_id)`
-//       },
-//     });
+export const taskService = {
+  async getTasksByBoard(boardId: string): Promise<Task[]> {
+    const tasks = await db.task.findMany({
+      where: {
+        column: {
+          board_id: boardId, // filter by related column's board_id
+        },
+      },
+      orderBy: {
+        sort_order: "asc",
+      },
+      include: {
+        column: true, // equivalent to Supabase `columns!inner(board_id)`
+      },
+    });
 
-//     return tasks;
-//   },
+    return tasks;
+  },
 
-//   async createTask(
-//     task: Omit<Task, "id" | "created_at" | "updated_at">
-//   ): Promise<Task> {
-//     const newTask = await db.task.create({
-//       data: {
-//         title: task.title,
-//         description: task.description,
-//         column_id: task.column_id,
-//         sort_order: task.sort_order,
-//         priority : task.priority
-//       },
-//     });
+  async createTask(
+    task: Omit<Task, "id" | "created_at" | "updated_at">
+  ): Promise<Task> {
+    const newTask = await db.task.create({
+      data: {
+        title: task.title,
+        description: task.description,
+        column_id: task.column_id,
+        sort_order: task.sort_order,
+        priority : task.priority
+      },
+    });
     
 
-//     return newTask;
-//   },
+    return newTask;
+  },
 
-//   async moveTask(
-//     taskId: string,
-//     newColumnId: string,
-//     newOrder: number
-//   ): Promise<Task> {
-//     const updatedTask = await db.task.update({
-//       where: {
-//         id: taskId,
-//       },
-//       data: {
-//         column_id: newColumnId,
-//         sort_order: newOrder,
-//       },
-//     });
+  async moveTask(
+    taskId: string,
+    newColumnId: string,
+    newOrder: number
+  ): Promise<Task> {
+    const updatedTask = await db.task.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        column_id: newColumnId,
+        sort_order: newOrder,
+      },
+    });
 
-//     return updatedTask;
-//   },
-// };
+    return updatedTask;
+  },
+};
 
-// export const boardDataService = {
-//   async getBoardWithColumns(boardId: string) {
-//     const [board, columns] = await Promise.all([
-//       boardService.getBoard(boardId),
-//       columnService.getColumns(boardId),
-//     ]);
+export const boardDataService = {
+  async getBoardWithColumns(boardId: string) {
+    const [board, columns] = await Promise.all([
+      boardService.getBoard(boardId),
+      columnService.getColumns(boardId),
+    ]);
 
-//     if (!board) throw new Error("Board not found");
+    if (!board) throw new Error("Board not found");
 
-//     const tasks = await taskService.getTasksByBoard(boardId);
+    const tasks = await taskService.getTasksByBoard(boardId);
 
-//     const columnsWithTasks = columns.map((column) => ({
-//       ...column,
-//       tasks: tasks.filter((task) => task.column_id === column.id),
-//     }));
+    const columnsWithTasks = columns.map((column) => ({
+      ...column,
+      tasks: tasks.filter((task) => task.column_id === column.id),
+    }));
 
-//     return {
-//       board,
-//       columnsWithTasks,
-//     };
-//   },
+    return {
+      board,
+      columnsWithTasks,
+    };
+  },
 
-//   async createBoardWithDefaultColumns(boardData: {
-//     title: string;
-//     description?: string;
-//     color?: string;
-//     userId: string;
-//   }) {
-//     return await db.$transaction(async (tx) => {
-//       // Create the board
-//       const board = await tx.board.create({
-//         data: {
-//           title: boardData.title,
-//           description: boardData.description || null,
-//           color: boardData.color || "bg-blue-500",
-//           user_id: boardData.userId,
-//         },
-//       });
+  async createBoardWithDefaultColumns(boardData: {
+    title: string;
+    description?: string;
+    color?: string;
+    userId: string;
+  }) {
+    return await db.$transaction(async (tx) => {
+      // Create the board
+      const board = await tx.board.create({
+        data: {
+          title: boardData.title,
+          description: boardData.description || null,
+          color: boardData.color || "bg-blue-500",
+          user_id: boardData.userId,
+        },
+      });
 
-//       // Default columns
-//       const defaultColumns = [
-//         { title: "To Do", sort_order: 0 },
-//         { title: "In Progress", sort_order: 1 },
-//         { title: "Review", sort_order: 2 },
-//         { title: "Done", sort_order: 3 },
-//       ];
+      // Default columns
+      const defaultColumns = [
+        { title: "To Do", sort_order: 0 },
+        { title: "In Progress", sort_order: 1 },
+        { title: "Review", sort_order: 2 },
+        { title: "Done", sort_order: 3 },
+      ];
 
-//       // Create all default columns for the new board
-//       await tx.column.createMany({
-//         data: defaultColumns.map((col) => ({
-//           ...col,
-//           board_id: board.id,
-//           user_id: boardData.userId,
-//         })),
-//       });
+      // Create all default columns for the new board
+      await tx.column.createMany({
+        data: defaultColumns.map((col) => ({
+          ...col,
+          board_id: board.id,
+          user_id: boardData.userId,
+        })),
+      });
 
-//       return board;
-//     });
-//   },
-// };
+      return board;
+    });
+  },
+};
