@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { Badge } from "./ui/badge";
 import Auth from "@/lib/auth";
 //@ts-ignore
@@ -37,6 +37,14 @@ export default function Navbar({
   const isDashboardPage = pathname === "/dashboard";
   const isBoardPage = pathname.startsWith("/boards/");
 
+
+  const fnHandleSignUp = () => {
+    redirect('/signup');
+  }
+
+  const fnHandleSignIn = () => {
+    redirect('/sign-in');
+  }
   if (isDashboardPage) {
     return (
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -148,11 +156,12 @@ export default function Navbar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-xs sm:text-sm"
+                  className="text-xs sm:text-sm cursor-pointer"
+                  onClick={fnHandleSignIn}
                 >
                   Sign In
                 </Button>
-                <Button size="sm" className="text-xs sm:text-sm">
+                <Button size="sm" className="text-xs sm:text-sm cursor-pointer" onClick={fnHandleSignUp}>
                   Sign Up
                 </Button>
             </div>
