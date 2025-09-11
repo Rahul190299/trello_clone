@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,15 +16,17 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Auth from "@/lib/auth";
-//@ts-ignore
-import Cookies from 'js-cookie';
-
-export default function HomePage() {
+import { cookies } from "next/headers";
+import cookie from 'cookie';
+export default async function HomePage() {
   //const cookieStore = cookies();
-  const token = Cookies.get("token")?.value;
+  //@ts-ignore
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.get('Set-Cookie')?.value;
   let user = null;
-  if (token) {
-    user = Auth.verifySessionToken(token);
+  if (cookieString) {
+    const parsedCookies = cookie.parse(cookieString || '');
+    user = Auth.verifySessionToken(parsedCookies.token);
   }
 
   const features = [
