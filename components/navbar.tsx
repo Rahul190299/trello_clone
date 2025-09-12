@@ -20,20 +20,18 @@ interface Props {
 
   onFilterClick?: () => void;
   filterCount?: number;
+  username : string
 }
 export default function Navbar({
   boardTitle,
   onEditBoard,
   onFilterClick,
   filterCount = 0,
+  username
 }: Props) {
   //const { isSignedIn, user } = useUser();
   const pathname = usePathname();
-  const token = Cookies.get("token")?.value;
-    let user = null;
-    if (token) {
-      user = Auth.verifySessionToken(token);
-    }
+  
   const isDashboardPage = pathname === "/dashboard";
   const isBoardPage = pathname.startsWith("/boards/");
 
@@ -139,10 +137,10 @@ export default function Navbar({
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-          {user ? (
+          {username ? (
             <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
               <span className="text-xs sm:text-sm text-gray-600 hidden sm:block">
-                Welcome, {user.firstName ?? user.emailAddresses[0].emailAddress}
+                Welcome, {username}
               </span>
               <Link href="/dashboard">
                 <Button size="sm" className="text-xs sm:text-sm">
