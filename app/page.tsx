@@ -54,7 +54,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <Navbar />
+      <Navbar username = {user?.email}/>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
