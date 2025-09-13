@@ -26,12 +26,14 @@ const formSchema = z.object({
 });
 
 export function SignInForm() {
-  const setEmail = useSessionStore((state) => state.setEmail);
+  const {setEmail,email} = useSessionStore();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: {
+      email : "",
+      password : ""
+    },
   });
-
   const router = useRouter();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -117,7 +119,7 @@ export function SignInForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" className = "focus:ring-none border-none bg-primary/5 focus:outline-none" placeholder="password" {...field} />
+                    <Input  type="password" className = "focus:ring-none border-none bg-primary/5 focus:outline-none" placeholder="password" {...field} />
                   </FormControl>
 
                   <FormMessage className="text-red-500" />
