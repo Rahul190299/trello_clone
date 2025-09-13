@@ -47,6 +47,8 @@ export function ProfileForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      email : "",
+      password : ""
     },
   });
 
