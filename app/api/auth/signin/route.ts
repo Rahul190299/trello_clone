@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
           message: "log in success",
           redirectUrl: "/",
         });
-        const token = Auth.generateToken(user.id, user.email);
+        const token = Auth.generateToken(user.id, user.email,user.name);
         Auth.setTokenCookie(response, token);
         return response;
       }
