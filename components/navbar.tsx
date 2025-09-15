@@ -20,14 +20,16 @@ interface Props {
 
   onFilterClick?: () => void;
   filterCount?: number;
-  username : string
+  username : string ;
+  email : string;
 }
 export default function Navbar({
   boardTitle,
   onEditBoard,
   onFilterClick,
   filterCount = 0,
-  username
+  username,
+  email
 }: Props) {
   //const { isSignedIn, user } = useUser();
   const pathname = usePathname();
@@ -140,7 +142,7 @@ export default function Navbar({
           {username ? (
             <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
               <span className="text-xs sm:text-sm text-gray-600 hidden sm:block">
-                Welcome, {username}
+                Welcome, {username ?? email}
               </span>
               <Link href="/dashboard">
                 <Button size="sm" className="text-xs sm:text-sm">
