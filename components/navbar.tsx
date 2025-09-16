@@ -37,7 +37,9 @@ export default function Navbar({
   const isDashboardPage = pathname === "/dashboard";
   const isBoardPage = pathname.startsWith("/boards/");
 
-
+  const fnGoToDashboard = () =>{
+    redirect('/dashboard');
+  }
   const fnHandleSignUp = () => {
     redirect('/signup');
   }
@@ -145,7 +147,7 @@ export default function Navbar({
                 Welcome, {username ?? email}
               </span>
               <Link href="/dashboard">
-                <Button size="sm" className="text-xs sm:text-sm">
+                <Button size="sm" onClick={fnGoToDashboard} className="text-xs sm:text-sm cursor-pointer">
                   Go to Dashboard <ArrowRight />
                 </Button>
               </Link>

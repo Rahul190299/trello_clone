@@ -42,11 +42,11 @@ export default class Auth {
     }
   }
 
-  public static generateToken(userId: string, email: string): string | null {
+  public static generateToken(userId: string, email: string ,username :string = "" ): string | null {
     try {
       // Create a JWT
       const token = jwt.sign(
-        { id: userId, email: email }, // Payload
+        { id: userId, email: email , username : username}, // Payload
         JWT_SECRET,
         { expiresIn: "1d" } // Token expiration time
       );
