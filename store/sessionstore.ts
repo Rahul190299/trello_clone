@@ -7,6 +7,8 @@ interface userStore{
     setUserId : (userId : string)  => void,
     email : string,
     setEmail : (email : string) => void,
+    username : string,
+    setUserName : (username : string) => void,
 }
 
 export const useSessionStore = create<userStore>((set) => ({
@@ -16,4 +18,7 @@ export const useSessionStore = create<userStore>((set) => ({
     setEmail : (email) => set({email : email}),
     userId : "",
     setUserId : (userid) => set({userId : userid}),
+    username : "",
+    setUserName : (username) => set({username : username}),
+
 }));

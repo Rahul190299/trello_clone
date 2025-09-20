@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { usePlan } from "@/lib/context/PlanContext";
 import { useBoards } from "@/lib/hooks/useBoards";
 import { Board } from "@/lib/models/models";
+import { useSessionStore } from "@/store/sessionstore";
 import {
   Filter,
   Grid3x3,
@@ -36,7 +37,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function DashboardPage() {
-  const { user } = useUser();
+  //const { user } = useUser();
+  const {userId,email,username} = useSessionStore();
   const { createBoard, boards, loading, error } = useBoards();
   const router = useRouter();
   const { isFreeUser } = usePlan();
@@ -118,7 +120,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar username={username} email={email}/>
 
       
 
