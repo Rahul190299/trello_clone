@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { currentProfile } from "@/lib/current-profile";
 import { boardService } from "../../../lib/services";
-import { ca } from "zod/v4/locales";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -30,7 +29,18 @@ export async function GET(req: NextRequest) {
 export async function POST(request : NextRequest) {
   try{
     const body = await request.json(); // Parse the incoming JSON body
-    await boardService.createBoard(body);
+    const createdBoard = await boardService.createBoard(body);
+    return NextResponse.json({id : createdBoard.id},{status : 200});
+  }catch(err){
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function PUT(request : NextRequest) {
+  try{
+    const body = await request.json(); // Parse the incoming JSON body
+    const createdBoard = await boardService.updateBoard(body.id,body.data);
+    return NextResponse.json({id : createdBoard.id},{status : 200});
   }catch(err){
     return new NextResponse("Internal Error", { status: 500 });
   }
