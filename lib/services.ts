@@ -43,7 +43,7 @@ export const boardService = {
     const newBoard = await db.board.create({
       data: board,
     });
-
+    fetch('/api/')
     return newBoard;
   },
 
