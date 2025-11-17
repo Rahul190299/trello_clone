@@ -4,6 +4,8 @@ import Auth from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { PlanProvider } from "@/lib/context/PlanContext";
+
+import { cookies } from "next/headers";
 export default async function DashboardLayout({
   children,
 }: {
